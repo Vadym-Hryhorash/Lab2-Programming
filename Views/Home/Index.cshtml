@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Lab2_Programming.Models.Student>
+
+<div >
+    <h1>Вітаємо!</h1>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="error-message">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    <div id="createStudentForm" style="display: none; margin-bottom: 40px;">
+        <h2>Додати нового учня</h2>
+
+        <div class="form-body">
+            <form asp-controller="Home" asp-action="CreateStudent" method="POST">
+
+                <div class="form-group">
+                    <label for="LastName">Прізвище *</label>
+                    <input type="text" id="LastName" name="LastName" placeholder="Введіть прізвище" maxlength="30" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Name">Ім'я *</label>
+                        <input type="text" id="Name" name="Name" placeholder="Введіть ім'я" maxlength="30" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ThirdName">По батькові</label>
+                        <input type="text" id="ThirdName" name="ThirdName" placeholder="Введіть по батькові" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="className">Клас *</label>
+                        <input type="text" id="className" name="className" placeholder="Наприклад: 10-А" maxlength="5" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ParentsPhone">Номер телефону когось з батьків</label>
+                        <input type="text" id="ParentsPhone" name="ParentsPhone" placeholder="Наприклад: +380946648275" maxlength="13">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="button cancel-button" onclick="toggleForm()">Скасувати</button>
+                    <button type="submit" class="button submit-button">Зберегти учня</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <div class="header">
+        <h2>Управління учнями</h2>
+        <button class="add-button" onclick="toggleForm()">+ Додати учня</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50px;">ID</th>
+                <th>ПІБ учня</th>
+                <th>Клас</th>
+                <th>Вчитель</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StudentId</td>
+                    <td>@item.LastName @item.Name @item.ThirdName</td>
+                    <td>@(item.Teacher != null ? item.Teacher.TeacherClass : "Немає")</td>
+                    <td>@(item.Teacher != null ? $"{item.Teacher.LastName} {item.Teacher.Name}" : "—")</td>
+                    <td class="actions">
+                        <a asp-controller="Home" asp-action="Info" asp-route-id="@item.StudentId" class="view-button" style="text-decoration: none;">👁 Перегляд</a>
+                        <form asp-controller="Home" asp-action="DeleteStudent" asp-route-id="@item.StudentId" method="post" style="display:inline;"><button type="submit" class="delete-button">🗑</button></form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
+<script>
+    function toggleForm() {
+        var form = document.getElementById("createStudentForm");
+        if (form.style.display === "none")
+        {
+            form.style.display = "block";
+        }
+        else
+        {
+            form.style.display = "none";
+        }
+    }
+</script>

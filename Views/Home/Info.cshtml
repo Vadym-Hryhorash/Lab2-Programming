@@ -1,0 +1,166 @@
+﻿@model Lab2_Programming.Models.Student
+
+<div>
+    <div class="header">
+        <h2>Картка учня: @Model.Name @Model.LastName</h2>
+        <div class="div-buttons">
+            <a class="back-button" style="text-decoration: none;" onclick="toggleForm()">Редагувати</a>
+            <a asp-controller="Home" asp-action="Index" class="back-button" style="text-decoration: none;">← До списку</a>
+        </div>
+    </div>
+
+    <div id="editStudentForm" style="display: none; margin-bottom: 40px;">
+        <h2 style="margin-top: 20px">Редагувати дані</h2>
+
+        <div class="form-body">
+            <form asp-controller="Home" asp-action="UpdateStudent" method="POST">
+
+                <div class="form-group">
+                    <label for="LastName">Прізвище</label>
+                    <input type="text" id="LastName" name="LastName" value="@Model.LastName" maxlength="30" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Name">Ім'я</label>
+                        <input type="text" id="Name" name="Name" value="@Model.Name" maxlength="30" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ThirdName">По батькові</label>
+                        <input type="text" id="ThirdName" name="ThirdName" value="@Model.ThirdName" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="className">Клас</label>
+                        <input type="text" id="className" name="className" value="@Model.Teacher.TeacherClass" maxlength="5" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="AvarageGrade">Середній бал</label>
+                        <input type="text" id="AvarageGrade" name="AvarageGrade" value="@Model.AvarageGrade" maxlength="5" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ParentsPhone">Номер телефону когось з батьків</label>
+                        <input type="text" id="ParentsPhone" name="ParentsPhone" value="@Model.ParentsPhone" maxlength="13">
+                    </div>
+                </div>
+
+                <input type="hidden" name="StudentId" value="@Model.StudentId" />
+
+                <div class="form-actions">
+                    <button type="button" class="button cancel-button" onclick="toggleForm()">Скасувати</button>
+                    <button type="submit" class="button submit-button">Зберегти зміни</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <div id="infoCard" class="content-body">
+
+        <div class="info-card">
+            <h3>Інформація про учня</h3>
+
+            <div class="data-row">
+                <span class="data-label">ID Учня </span>
+                <span class="data-value">@Model.StudentId</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Прізвище</span>
+                <span class="data-value">@Model.LastName</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Ім'я</span>
+                <span class="data-value">@Model.Name</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">По батькові</span>
+                <span class="data-value">@Model.ThirdName</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Клас</span>
+                <span class="data-value">@Model.Teacher.TeacherClass</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Середній бал</span>
+                <span class="data-value">@Model.AvarageGrade</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Телефон батьків</span>
+                <span class="data-value">@Model.ParentsPhone</span>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>Класний керівник</h3>
+
+            <div class="data-row">
+                <span class="data-label">ID Вчителя</span>
+                <span class="data-value">@Model.TeacherId</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Прізвище</span>
+                <span class="data-value">@Model.Teacher.LastName</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Ім'я</span>
+                <span class="data-value">@Model.Teacher.Name</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">По батькові</span>
+                <span class="data-value">@Model.Teacher.ThirdName</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Клас керівництва</span>
+                <span class="data-value">@Model.Teacher.TeacherClass</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Контактний телефон</span>
+                <span class="data-value">@Model.Teacher.PhoneNumber</span>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">Заробітна плата</span>
+                <span class="data-value">@Model.Teacher.Salary</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function toggleForm() {
+        var form = document.getElementById("editStudentForm");
+        var card = document.getElementById("infoCard");
+        if (form.style.display === "none")
+        {
+            form.style.display = "block";
+            card.style.display = "none";
+        }
+        else
+        {
+            form.style.display = "none";
+            card.style.display = "grid";
+        }
+    }
+</script>
